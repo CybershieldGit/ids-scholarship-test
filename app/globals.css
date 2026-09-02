@@ -33,3 +33,37 @@ body {
 .animate-glow {
   animation: glow-pulse 2s infinite;
 }
+
+/* Smooth CTA breathing / pulse scale animation */
+@keyframes pulse-scale {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 15px 30px -5px rgba(234, 37, 37, 0.35);
+  }
+  50% {
+    transform: scale(1.035);
+    box-shadow: 0 25px 45px -5px rgba(234, 37, 37, 0.55);
+  }
+}
+
+.animate-pulse-scale {
+  animation: pulse-scale 2.2s infinite ease-in-out;
+}
+
+/* Anti-Screen Capture & Anti-Copy Rules */
+.no-screen-capture {
+  -webkit-touch-callout: none !important;
+  -webkit-user-select: none !important;
+  -khtml-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  user-select: none !important;
+}
+
+/* Anti-Print / PDF Export Protection */
+@media print {
+  html, body {
+    display: none !important;
+    visibility: hidden !important;
+  }
+}

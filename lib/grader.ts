@@ -4,7 +4,8 @@ export function calculateTestResults(
   student: StudentLead,
   questions: Question[],
   userAnswers: Record<number, "A" | "B" | "C" | "D">,
-  timeTakenSeconds: number
+  timeTakenSeconds: number,
+  tabSwitchCount: number = 0
 ): TestResultPayload {
   const totalQuestions = questions.length;
   let correctCount = 0;
@@ -39,5 +40,6 @@ export function calculateTestResults(
     unattempted: unattemptedCount,
     score_percentage: scorePercentage,
     time_taken_seconds: Math.max(1, Math.round(timeTakenSeconds)),
+    tab_switch_count: tabSwitchCount,
   };
 }

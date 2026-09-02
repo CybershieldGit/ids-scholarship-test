@@ -32,4 +32,5 @@ export interface TestResultPayload {
   unattempted: number;
   score_percentage: number;
   time_taken_seconds: number;
+  tab_switch_count: number;
 }
