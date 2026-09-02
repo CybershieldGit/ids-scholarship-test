@@ -5,7 +5,8 @@ export function calculateTestResults(
   questions: Question[],
   userAnswers: Record<number, "A" | "B" | "C" | "D">,
   timeTakenSeconds: number,
-  tabSwitchCount: number = 0
+  tabSwitchCount: number = 0,
+  status: string = "Completed"
 ): TestResultPayload {
   const totalQuestions = questions.length;
   let correctCount = 0;
@@ -28,6 +29,9 @@ export function calculateTestResults(
   const scorePercentage = totalQuestions > 0 ? Number(((correctCount / totalQuestions) * 100).toFixed(1)) : 0;
 
   return {
+    action: "UPDATE_TEST_RESULT",
+    lead_id: student.lead_id,
+    status: status,
     full_name: student.full_name.trim(),
     phone: student.phone.trim(),
     email: student.email.trim(),

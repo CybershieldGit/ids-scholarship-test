@@ -42,7 +42,7 @@ export default function ThankYouPage() {
       hasInitializedRef.current = true;
 
       // Trigger Celebration Confetti ONLY if score is 20% or above
-      const scorePct = parsed?.score_percentage ?? 0;
+      const scorePct = typeof parsed?.score_percentage === "number" ? parsed.score_percentage : Number(parsed?.score_percentage) || 0;
       if (scorePct >= 20) {
         confetti({
           particleCount: 70,
@@ -100,7 +100,7 @@ export default function ThankYouPage() {
     );
   }
 
-  const scorePercentage = result.score_percentage !== undefined ? result.score_percentage : 0;
+  const scorePercentage = typeof result.score_percentage === "number" ? result.score_percentage : Number(result.score_percentage) || 0;
 
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col justify-between select-none">

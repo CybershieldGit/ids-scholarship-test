@@ -1,4 +1,5 @@
 export interface StudentLead {
+  lead_id?: string;
   full_name: string;
   phone: string;
   email: string;
@@ -20,17 +21,20 @@ export interface Question {
 }
 
 export interface TestResultPayload {
+  action?: "INIT_LEAD" | "UPDATE_TEST_RESULT";
+  lead_id?: string;
+  status?: string;
   full_name: string;
   phone: string;
   email: string;
   city: string;
   qualification: string;
   total_questions: number;
-  attempted: number;
-  correct_answers: number;
-  wrong_answers: number;
-  unattempted: number;
-  score_percentage: number;
-  time_taken_seconds: number;
-  tab_switch_count: number;
+  attempted: number | string;
+  correct_answers: number | string;
+  wrong_answers: number | string;
+  unattempted: number | string;
+  score_percentage: number | string;
+  time_taken_seconds: number | string;
+  tab_switch_count: number | string;
 }

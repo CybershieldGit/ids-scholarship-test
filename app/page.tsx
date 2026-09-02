@@ -86,10 +86,15 @@ export default function RegistrationPage() {
 
     setIsSubmitting(true);
 
-    // Save student details in sessionStorage
+    const cleanPhone = formData.phone.replace(/\D/g, "").slice(-10);
+    const shortCode = Math.random().toString(36).substring(2, 7).toUpperCase();
+    const leadId = `IDS-${shortCode}`;
+
+    // Save student details with unique lead_id in sessionStorage
     const studentLeadData: StudentLead = {
+      lead_id: leadId,
       full_name: formData.full_name.trim(),
-      phone: formData.phone.replace(/\D/g, "").slice(-10),
+      phone: cleanPhone,
       email: formData.email.trim().toLowerCase(),
       city: formData.city.trim(),
       qualification: formData.qualification,
@@ -102,6 +107,44 @@ export default function RegistrationPage() {
       sessionStorage.removeItem("ids_test_strikes");
       sessionStorage.removeItem("ids_test_violation");
       sessionStorage.setItem("ids_test_start_time", Date.now().toString());
+    }
+
+    // Stage 1 Ingestion: Push initial lead demographics to Google Sheets immediately
+    const webhookUrl = process.env.NEXT_PUBLIC_GOOGLE_SHEET_WEBHOOK_URL;
+    if (webhookUrl) {
+      try {
+        const initialLeadPayload = {
+          action: "INIT_LEAD",
+          lead_id: leadId,
+          status: "Test In Progress",
+          full_name: studentLeadData.full_name,
+          phone: studentLeadData.phone,
+          email: studentLeadData.email,
+          city: studentLeadData.city,
+          qualification: studentLeadData.qualification,
+          total_questions: totalQuestionsCount,
+          attempted: "-",
+          correct_answers: "-",
+          wrong_answers: "-",
+          unattempted: "-",
+          score_percentage: "-",
+          time_taken_seconds: "-",
+          tab_switch_count: "-",
+        };
+
+        fetch(webhookUrl, {
+          method: "POST",
+          mode: "no-cors",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(initialLeadPayload),
+        }).catch((err) => {
+          console.warn("[IDS Scholarship Test] Initial lead ingestion warning:", err);
+        });
+      } catch (err) {
+        console.warn("[IDS Scholarship Test] Error dispatching initial lead:", err);
+      }
     }
 
     router.push("/test");

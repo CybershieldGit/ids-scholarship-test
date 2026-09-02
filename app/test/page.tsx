@@ -118,13 +118,22 @@ export default function TestEnginePage() {
       // Read final strikes count
       const finalStrikes = parseInt(sessionStorage.getItem("ids_test_strikes") || "0", 10);
 
-      // Calculate lightweight lead payload with tab switch count
+      // Determine final status
+      let statusText = "Completed";
+      if (submissionReason === "violation") {
+        statusText = "Auto-Submitted (Violation)";
+      } else if (submissionReason === "timeout") {
+        statusText = "Auto-Submitted (Timeout)";
+      }
+
+      // Calculate lightweight lead payload with tab switch count and status
       const payload = calculateTestResults(
         student,
         SCHOLARSHIP_QUESTIONS,
         answers,
         timeTakenSeconds,
-        finalStrikes
+        finalStrikes,
+        statusText
       );
 
       console.log("[IDS Scholarship Test] Final Lead Payload:", payload, "Reason:", submissionReason);
