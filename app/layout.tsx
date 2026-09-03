@@ -52,10 +52,12 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/IDS_LOGO.svg",
+        url: "https://scholarship.idigitalstudies.com/og-image.png",
+        secureUrl: "https://scholarship.idigitalstudies.com/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Institute of Digital Studies - Digital Marketing Scholarship Test",
+        type: "image/png",
+        alt: "Digital Marketing Scholarship Test 2026 - Institute of Digital Studies",
       },
     ],
   },
@@ -65,7 +67,7 @@ export const metadata: Metadata = {
     description:
       "Take the official 5-minute online assessment and qualify for Up to 70% Merit Scholarship on advanced master programs.",
     creator: "@idigitalstudies",
-    images: ["/IDS_LOGO.svg"],
+    images: ["https://scholarship.idigitalstudies.com/og-image.png"],
   },
   robots: {
     index: true,
@@ -98,6 +100,11 @@ export default function RootLayout({
     <html lang="en" className="scroll-smooth">
       <head>
         <StructuredData />
+        <meta property="og:image" content="https://scholarship.idigitalstudies.com/og-image.png" />
+        <meta property="og:image:secure_url" content="https://scholarship.idigitalstudies.com/og-image.png" />
+        <meta property="og:image:type" content="image/png" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
       </head>
       <body className="min-h-screen bg-slate-50 text-slate-900 antialiased flex flex-col select-none font-sans">
         <AntiInspectGuard />
